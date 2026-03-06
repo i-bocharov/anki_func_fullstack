@@ -34,7 +34,7 @@ def load_words(filename: str = 'words.txt') -> Dict[str, str]:
         # Это освобождает ресурсы даже при возникновении ошибок внутри блока.
         with open(filename, 'r', encoding='utf-8') as file:
             # Словарь для хранения пар слов и их переводов.
-            word_to_translation: Dict[str, str] = {}
+            words: Dict[str, str] = {}
 
             # Последовательно читаем каждую строку файла.
             for line in file:
@@ -54,10 +54,10 @@ def load_words(filename: str = 'words.txt') -> Dict[str, str]:
                 # Первая часть — исходное слово, вторая — перевод.
                 key, value = line_content.split(',', 1)
                 # Сохраняем пару в словарь с очисткой от лишних пробелов.
-                word_to_translation[key.strip()] = value.strip()
+                words[key.strip()] = value.strip()
 
             # Возвращаем сформированный словарь пар слов и переводов.
-            return word_to_translation
+            return words
 
     except FileNotFoundError:
         # Обрабатываем случай, когда файл не найден в указанном пути.
