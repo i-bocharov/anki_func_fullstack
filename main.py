@@ -1,7 +1,7 @@
 import random
 import sys
 import time
-from typing import Dict, Tuple
+from typing import Dict, Tuple, List
 
 
 STOP_WORD = 'СТОП'
@@ -85,8 +85,33 @@ def add_words(words):
     ...
 
 
-def show_all_words(words):
-    ...
+def show_all_words(words: Dict[str, str]) -> None:
+    '''
+    Выводит все пары слов и переводов из словаря в одну строку.
+    Формат вывода: 'слово - перевод; слово - перевод; ...'.
+    При пустом словаре выводит пустую строку. Функция не возвращает значения.
+    '''
+    # Проверяем, есть ли слова в словаре для вывода.
+    # При пустом словаре выводим пустую строку.
+    if not words:
+        print()
+        return
+
+    # Список для хранения отформатированных пар слов и переводов.
+    output_parts: List[str] = []
+
+    # Формируем строку вида 'слово - перевод' для каждой пары.
+    # Сохраняем оригинальный регистр слов без изменений.
+    for word, translation in words.items():
+        # Создаем отформатированную пару с разделителем ' - '.
+        formatted_pair = f'{word} - {translation}'
+        # Добавляем пару в список для последующего объединения.
+        output_parts.append(formatted_pair)
+
+    # Объединяем все пары через '; ' (точка с запятой и пробел).
+    # Выводим результирующую строку одним сообщением на экран.
+    formatted_output = '; '.join(output_parts)
+    print(formatted_output)
 
 
 def save_words(words: Dict[str, str], filename: str = 'words.txt') -> None:
