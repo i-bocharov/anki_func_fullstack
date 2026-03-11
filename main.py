@@ -80,14 +80,14 @@ def print_statistics(score: int, total_time: float) -> None:
         average_time_display: str = f'{average_time:.2f} сек.'
     else:
         # При нулевом счёте выводим прочерк вместо среднего времени.
-        average_time_display = '-'
+        average_time_display = '—'
 
     # Выводим итоговый счёт пользователя (количество правильных ответов).
     print(f'Ваш итоговый счёт: {score}')
     # Выводим общее время и среднее время (или прочерк) в одной строке.
     print(
         f'Время игры: {total_time:.2f} секунд'
-        f'(среднее время: {average_time_display}'
+        f' (среднее время: {average_time_display}'
     )
 
 
@@ -204,7 +204,7 @@ def train_until_mistake(words: Dict[str, str]) -> None:
     # Счётчик правильных ответов за игровую сессию.
     score: int = 0
     # Общее время игры в секундах (накапливается по ходу игры).
-    total_time: float = 0
+    total_time: float = 0.0
 
     # Создаем список пар слов и переводов для случайного порядка.
     word_pairs: List[Tuple[str, str]] = list(words.items())
@@ -335,7 +335,22 @@ def save_words(words: Dict[str, str], filename: str = 'words.txt') -> None:
         print(f'Error: Unable to write to file "{filename}".')
         sys.exit(1)
 
-def main():
+
+def main() -> None:
+    '''
+    Запускает основной цикл работы программы-тренажёра для изучения слов.
+    Реализует меню выбора режимов работы программы.
+    Завершает программу при выборе пункта выхода.
+    Функция не возвращает значения.
+    '''
+    # Загружаем словарь слов из файла words.txt.
+    # При ошибке загрузки программа завершится через load_words().
+    words: Dict[str, str] = load_words()
+
+    # Выводим количество загруженных слов для информирования пользователя.
+    print(f'Было загружено {len(words)} слов из файла words.txt')
+
+    # Запускаем бесконечный цикл меню для взаимодействия с пользователем.
     while True:
         menu = '''Меню:
         1. Начать игру
@@ -345,7 +360,30 @@ def main():
         5. Выход
         '''
         print(menu)
-        menu_choice = input('Пункт меню: ')
+
+        # Запрашиваем номер пункта меню от пользователя.
+        menu_choice: str = input('Пункт меню: ').strip()
+
+        # Обрабатываем выбор пользователя в зависимости от введённого номера.
+        if menu_choice == '1':
+            # Пункт 1: Запускаем обычную игру со случайным порядком слов.
+            start_game(words)
+        elif menu_choice == '2':
+            # Пункт 2: Добавляем новые пары слов в словарь интерактивно.
+            add_words(words)
+        elif menu_choice == '3':
+            # Пункт 3: Запускаем режим тренировки до первой ошибки.
+            train_until_mistake(words)
+        elif menu_choice == '4':
+            # Пункт 4: Выводим все пары слов и переводов на экран.
+            show_all_words(words)
+        elif menu_choice == '5':
+            # Пункт 5: Сохраняем словарь в файл и завершаем программу.
+            save_words(words)
+            sys.exit(0)
+        else:
+            # Любой другой ввод: сообщаем о неверном пункте меню.
+            print('Неизвестный пункт меню.')
 
 
 if __name__ == '__main__':
