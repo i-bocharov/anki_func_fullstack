@@ -152,12 +152,12 @@ def start_game(words: Dict[str, str]) -> None:
     # Создаём список пар слов и переводов для случайного порядка.
     # Преобразуем dict_items в список для возможности перемешивания.
     word_pairs: List[Tuple[str, str]] = list(words.items())
-    
+
     # Бесконечный цикл игры - завершается только по вводу STOP_WORD.
     while True:
         # Выбираем случайное слово из словаря.
         word, translation = random.choice(word_pairs)
-        
+
         # Запрашиваем перевод у пользователя и получаем результат проверки.
         # ask_and_check возвращает: (флаг_выхода, флаг_правильности, время).
         is_stop, is_correct, answer_time = ask_and_check(word, translation)
