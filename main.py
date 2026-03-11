@@ -65,8 +65,30 @@ def load_words(filename: str = 'words.txt') -> Dict[str, str]:
         sys.exit(1)
 
 
-def print_statistics(score, total_time):
-    ...
+def print_statistics(score: int, total_time: float) -> None:
+    '''
+    Выводит итоговую статистику по завершении игры.
+    Показывает счёт, общее время и среднее время на ответ.
+    При нулевом счёте вместо среднего времени выводится прочерк.
+    Функция не возвращает значения.
+    '''
+    # Проверяем, есть ли правильные ответы для расчёта среднего времени.
+    if score > 0:
+        # Вычисляем среднее время на один правильный ответ.
+        average_time: float = total_time / score
+        # Форматируем среднее время с двумя знаками после запятой для вывода.
+        average_time_display: str = f'{average_time:.2f} сек.'
+    else:
+        # При нулевом счёте выводим прочерк вместо среднего времени.
+        average_time_display = '-'
+
+    # Выводим итоговый счёт пользователя (количество правильных ответов).
+    print(f'Ваш итоговый счёт: {score}')
+    # Выводим общее время и среднее время (или прочерк) в одной строке.
+    print(
+        f'Время игры: {total_time:.2f} секунд'
+        f'(среднее время: {average_time_display}'
+    )
 
 
 def ask_and_check(word: str, correct: str) -> Tuple[bool, bool, float]:
