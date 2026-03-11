@@ -82,7 +82,7 @@ def print_statistics(score: int, total_time: float) -> None:
         average_time_display = '—'
 
     # Выводим итоговый счёт пользователя (количество правильных ответов).
-    print(f'Ваш итоговый счёт: {score}')
+    print(f'Ваш итоговый счет: {score}')
     # Выводим общее время и среднее время (или прочерк) в одной строке.
     print(
         f'Время игры: {total_time:.2f} секунд'
